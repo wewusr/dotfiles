@@ -27,6 +27,10 @@ if command -v atuin &> /dev/null; then
     eval "$(atuin init zsh)"
 fi
 
+if command -v zoxide &> /dev/null; then
+    eval "$(zoxide init zsh)"
+fi
+
 # 6. Completion Styles
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:*' fzf-command fzf
@@ -50,7 +54,6 @@ export MANPAGER="nvim +Man!"
 
 alias ana="tldr"
 alias brave="brave-browser"
-alias cat="bat"
 alias cd="__zoxide_z"
 alias claer="clear"
 alias cls="clear"
@@ -59,10 +62,9 @@ alias df="duf --only local"
 alias du="dust"
 alias htop="btop"
 alias initconda="source /media/wewusr/Linux/downloaded/apps/conda/anaconda/anaconda3/etc/profile.d/conda.sh"
-alias install="'apt install'"
 alias ka="killall"
 alias la="eza --icons -laghH@ --time-style=long-iso"
-alias ls="eza --icons=always"
+alias ls="eza -a --icons=always"
 alias lsblk="lsblk -o NAME,MAJ:MIN,RM,SIZE,RO,TYPE,MOUNTPOINTS,UUID,FSTYPE"
 alias mna="man"
 alias mnt="./home/wewusr/.local/sbin/mnt"

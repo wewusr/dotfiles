@@ -1,6 +1,7 @@
 # 1. PATH & ENVIRONMENT (Move this to the top)
 export PATH="/usr/games:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:$HOME/usr/local/sbin:$HOME/.local/bin"
 export MANPAGER="nvim +Man!"
+. "$HOME/.atuin/bin/env"
 
 # 2. Boilerplate & History
 HISTFILE=~/.zsh_history
@@ -19,24 +20,26 @@ zinit light Aloxaf/fzf-tab
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-syntax-highlighting
-
-# 5. Integrations (Now they will find the binaries in the PATH)
-eval "$(starship init zsh)"
-
-if command -v atuin &> /dev/null; then
-    eval "$(atuin init zsh)"
-fi
-
-if command -v zoxide &> /dev/null; then
-    eval "$(zoxide init zsh)"
-fi
+zinit light MichaelAquilina/zsh-auto-notify
+zinit light MichaelAquilina/zsh-you-should-use
 
 # 6. Completion Styles
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:*' fzf-command fzf
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
+
+
 clear
 # Welcome message with ASCII art
-lolcat <<EOF >~/.temp
+lolcat <<EOF > ~/.temp
 ██╗    ██╗███████╗██╗    ██╗
 ██║    ██║██╔════╝██║    ██║
 ██║ █╗ ██║█████╗  ██║ █╗ ██║
@@ -48,13 +51,9 @@ Today is $(date +"%A, %B %d, %Y")
 EOF
 lolcat --force ~/.temp | truesay ~/Downloads/linux_penguin_animal_9362.png -p right
 
-export PATH="/usr/games:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:$HOME/usr/local/sbin:$HOME/.local/bin"
-
-export MANPAGER="nvim +Man!"
-
+# Aliases
 alias ana="tldr"
 alias brave="brave-browser"
-alias cd="__zoxide_z"
 alias claer="clear"
 alias cls="clear"
 alias ctree="cbonsai"
@@ -79,4 +78,14 @@ alias s="clear ; source ~/.zshrc"
 alias smc="py /home/wewusr/smc.py"
 alias telehack="ssh -p 2222 guest@telehack.com"
 alias z="__zoxide_z"
+alias zs="nvim ~/.zshrc"
+
+
+# 5. Integrations (Now they will find the binaries in the PATH)
+eval "$(starship init zsh)"
+if command -v atuin &> /dev/null; then
+    eval "$(atuin init zsh)"
+fi
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
+eval "$(zoxide init zsh)"
 

@@ -77,7 +77,7 @@ alias recov="sudo dpkg --configure -a && sudo apt install -f && sudo apt update 
 alias s="clear ; source ~/.zshrc"
 alias smc="py /home/wewusr/smc.py"
 alias telehack="ssh -p 2222 guest@telehack.com"
-alias z="__zoxide_z"
+#alias z="__zoxide_z"
 alias zs="nvim ~/.zshrc"
 
 

@@ -52,6 +52,7 @@ EOF
 lolcat --force ~/.temp | truesay ~/Downloads/linux_penguin_animal_9362.png -p right
 
 # Aliases
+alias cd="__zoxide_z"
 alias ana="tldr"
 alias brave="brave-browser"
 alias claer="clear"
@@ -77,9 +78,9 @@ alias recov="sudo dpkg --configure -a && sudo apt install -f && sudo apt update 
 alias s="clear ; source ~/.zshrc"
 alias smc="py /home/wewusr/smc.py"
 alias telehack="ssh -p 2222 guest@telehack.com"
-#alias z="__zoxide_z"
+# aalias z="__zoxide_z"
 alias zs="nvim ~/.zshrc"
-
+alias ai="atuin ai inline"
 
 # 5. Integrations (Now they will find the binaries in the PATH)
 eval "$(starship init zsh)"

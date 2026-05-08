@@ -50,6 +50,13 @@ format = '[ $user ]($style)'
 style = "bg:#3b4261 fg:#c8d3f5"
 disabled = false
 
+[os.symbols]
+Linux = " "
+Zorin = "  "
+Arch = "󰣇 "
+Ubuntu = "󰕈 "
+Macos = " "
+
 [sudo]
 format = '[$symbol]($style)'
 style = 'bg:#3b4261 fg:#ffc777'

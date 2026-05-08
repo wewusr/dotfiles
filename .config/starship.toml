@@ -52,7 +52,7 @@ disabled = false
 
 [os.symbols]
 Linux = " "
-Zorin = "  "
+Zorin = ""
 Arch = "󰣇 "
 Ubuntu = "󰕈 "
 Macos = " "
@@ -60,7 +60,7 @@ Macos = " "
 [sudo]
 format = '[$symbol]($style)'
 style = 'bg:#3b4261 fg:#ffc777'
-symbol = '🐧'
+symbol = ' '
 disabled = false
 
 [directory]

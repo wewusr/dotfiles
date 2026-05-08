@@ -37,7 +37,6 @@ zinit light-mode for \
     zdharma-continuum/zinit-annex-rust
 
 
-clear
 # Welcome message with ASCII art
 lolcat <<EOF > ~/.temp
 ██╗    ██╗███████╗██╗    ██╗
@@ -81,6 +80,10 @@ alias telehack="ssh -p 2222 guest@telehack.com"
 # aalias z="__zoxide_z"
 alias zs="nvim ~/.zshrc"
 alias ai="atuin ai inline"
+alias ga="git add ."
+alias gs="git status"
+alias gc="git commit"
+alias gp="git push origin main"
 
 # 5. Integrations (Now they will find the binaries in the PATH)
 eval "$(starship init zsh)"

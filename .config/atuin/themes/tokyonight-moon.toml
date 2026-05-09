@@ -1,0 +1,13 @@
+[theme]
+name = "tokyonight-moon"
+
+[colors]
+Base = "#c8d3f5"
+AlertInfo = "#c3e88d"
+AlertWarn = "#ffc777"
+AlertError = "#ff757f"
+Annotation = "#828bb8"
+Guidance = "#86e1fc"
+Important = "#82aaff"
+Title = "#c099ff"
+Muted = "#545c7e"

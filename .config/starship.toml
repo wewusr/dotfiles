@@ -51,11 +51,7 @@ style = "bg:#3b4261 fg:#c8d3f5"
 disabled = false
 
 [os.symbols]
-Linux = " "
-Zorin = ""
-Arch = "󰣇 "
-Ubuntu = "󰕈 "
-Macos = " "
+Linux = "  "
 
 [sudo]
 format = '[$symbol]($style)'

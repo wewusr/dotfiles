@@ -83,7 +83,8 @@ alias ai="atuin ai inline"
 alias ga="git add ."
 alias gs="git status"
 alias gc="git commit"
-alias gp="git push origin main"
+alias gps="git push origin main"
+alias gpl="git pull origin main"
 
 # 5. Integrations (Now they will find the binaries in the PATH)
 eval "$(starship init zsh)"

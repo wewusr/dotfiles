@@ -16,7 +16,7 @@ Personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/).
 Clone the repo and run the install script:
 
 ```bash
-git clone <your-repo-url> ~/dotfiles
+git clone --depth=1 https://github.com/wewusr/dotfiles.git
 cd ~/dotfiles
 chmod +x install.sh
 ./install.sh

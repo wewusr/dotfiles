@@ -1,4 +1,4 @@
-command_timeout = 1000
+command_timeout = 3000
 
 # Palette:
 # BG: #222436 (Dark Moon)
@@ -52,6 +52,7 @@ disabled = false
 
 [os.symbols]
 Linux = " "
+Zorin = " "
 
 [sudo]
 format = '[$symbol]($style)'

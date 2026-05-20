@@ -25,6 +25,7 @@ $git_status\
 [](fg:#ff966c bg:#c8d3f5)\
 ${custom.internet}\
 [](fg:#c8d3f5 bg:#4fd6be)\
+$python\
 $c\
 $rust\
 $golang\

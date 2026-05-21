@@ -82,6 +82,21 @@ when = "true"
 style = "bg:#c8d3f5 fg:#1e2030"
 format = '[ $output ]($style)'
 
+[python]
+symbol = " "
+style = "bg:#4fd6be fg:#1e2030"
+format = '[ $symbol$version ]($style)'
+
+[c]
+symbol = " "
+style = "bg:#4fd6be fg:#1e2030"
+format = '[ $symbol$version ]($style)'
+
+[rust]
+symbol = " "
+style = "bg:#4fd6be fg:#1e2030"
+format = '[ $symbol$version ]($style)'
+
 [cmd_duration]
 min_time = 2_000
 style = "bg:#2d3f76 fg:#c8d3f5"

@@ -1,6 +1,7 @@
 # 1. PATH & ENVIRONMENT (Move this to the top)
 export PATH="/usr/games:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:$HOME/usr/local/sbin:$HOME/.local/bin"
 export MANPAGER="nvim +Man!"
+export BAT_THEME="tokyonight_moon"
 . "$HOME/.atuin/bin/env"
 
 # 2. Boilerplate & History

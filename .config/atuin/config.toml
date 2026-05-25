@@ -333,6 +333,7 @@ records = true
 
 [ai]
 enabled = true
+session_continue_minutes = 10080
 ## Columns to display in the interactive search, from left to right.
 ## The selection indicator (" > ") is always shown first implicitly.
 ##

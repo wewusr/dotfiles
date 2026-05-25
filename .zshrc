@@ -48,9 +48,9 @@ lolcat <<EOF > ~/.temp
 ╚███╔███╔╝███████╗╚███╔███╔╝
  ╚══╝╚══╝ ╚══════╝ ╚══╝╚══╝
 Welcome to your terminal, $(whoami)!
-Today is $(date +"%A, %B %d, %Y")
+Today is $(date +"%A, %B %d, %Y") $(curl -s "wttr.in/27.77,30.80?format=%C+%t+%w&lang=en" 2>/dev/null)
 EOF
-lolcat --force ~/.temp | truesay ~/Downloads/linux_penguin_animal_9362.png -p right
+lolcat --force ~/.temp | truesay ~/tux.png -p right
 
 # Aliases
 alias ana="tldr"
@@ -75,6 +75,7 @@ alias please="sudo"
 alias pray="py ~/pray/main.py"
 alias pyt="clear ; python3 -q"
 alias python="python3"
+alias pray="/home/wewusr/python/wew/pray/main.py --lat 27.77678 --lon 30.80251"
 alias py="python3"
 alias recov="sudo dpkg --configure -a && sudo apt install -f && sudo apt update && sudo apt upgrade"
 alias s="clear ; source ~/.zshrc"

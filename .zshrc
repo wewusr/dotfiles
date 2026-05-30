@@ -48,7 +48,7 @@ lolcat <<EOF > ~/.temp
 ╚███╔███╔╝███████╗╚███╔███╔╝
  ╚══╝╚══╝ ╚══════╝ ╚══╝╚══╝
 Welcome to your terminal, $(whoami)!
-Today is $(date +"%A, %B %d, %Y") $(curl -s "wttr.in/27.77,30.80?format=%C+%t+%w&lang=en" 2>/dev/null)
+Today is $(date +"%A, %B %d, %Y")$(weather=$(curl -s "wttr.in/27.77,30.80?format=%C+%t+%w&lang=en" 2>/dev/null) && [ -n "$weather" ] && echo " | $weather")
 EOF
 lolcat --force ~/.temp | truesay ~/tux.png -p right
 
@@ -71,8 +71,6 @@ alias mnt="./home/wewusr/.local/sbin/mnt"
 alias mountall="sudo cp ~/fstab /etc/fstab && sudo mount -a && systemctl daemon-reload"
 alias nan="tldr"
 alias pat="sudo apt"
-alias please="sudo"
-alias pray="py ~/pray/main.py"
 alias pyt="clear ; python3 -q"
 alias python="python3"
 alias pray="/home/wewusr/python/wew/pray/main.py --lat 27.77678 --lon 30.80251"
@@ -88,6 +86,7 @@ alias gs="git status"
 alias gc="git commit"
 alias gps="git push origin main"
 alias gpl="git pull origin main"
+alias gimp="flatpak run org.gimp.GIMP"
 
 # 5. Integrations (Now they will find the binaries in the PATH)
 eval "$(starship init zsh)"

@@ -1,0 +1,19 @@
+/* Kitty-like tab styling for Ghostty (Tokyo Night Moon) */
+tab {
+    border-radius: 12px;
+    padding: 4px 12px;
+    margin: 2px 2px;
+    background: #2f334d;
+    color: #cdd6f4;
+    border: none;
+}
+
+tab:checked {
+    background: #82aaff;
+    color: #1e2030;
+}
+
+tabbar {
+    background: #1b1d2b;
+    padding: 2px;
+}

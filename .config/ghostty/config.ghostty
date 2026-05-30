@@ -1,0 +1,33 @@
+# Theme
+theme = TokyoNight Moon
+
+# Font
+font-family = FiraCode Nerd Font Mono Med
+font-style-bold = auto
+font-style-italic = auto
+font-style-bold-italic = auto
+font-size = 15
+
+# Window
+window-padding-x = 0
+window-padding-y = 20,0
+window-decoration = false
+fullscreen = true
+
+# Tabs
+gtk-titlebar = false
+gtk-tabs-location = bottom
+gtk-wide-tabs = false
+gtk-custom-css = tab-style.css
+window-theme = ghostty
+
+# Keybinds
+keybind = ctrl+shift+r=prompt_tab_title
+keybind = ctrl+comma=text:nvim ~/.config/ghostty/config\n
+keybind = ctrl+shift+x=toggle_readonly
+
+# Shell
+command = /usr/bin/zsh
+
+
+cursor-style = block

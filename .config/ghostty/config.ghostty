@@ -25,6 +25,8 @@ window-theme = ghostty
 keybind = ctrl+shift+r=prompt_tab_title
 keybind = ctrl+comma=text:nvim ~/.config/ghostty/config\n
 keybind = ctrl+shift+x=toggle_readonly
+keybind = ctrl+alt+equal=increase_font_size:13
+keybind = ctrl+alt+minus=decrease_font_size:13
 
 # Shell
 command = /usr/bin/zsh

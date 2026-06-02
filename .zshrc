@@ -72,7 +72,6 @@ alias mountall="sudo cp ~/fstab /etc/fstab && sudo mount -a && systemctl daemon-
 alias nan="tldr"
 alias pat="sudo apt"
 alias pyt="clear ; python3 -q"
-alias python="python3"
 alias pray="/home/wewusr/python/wew/pray/main.py --lat 27.77678 --lon 30.80251"
 alias py="python3"
 alias recov="sudo dpkg --configure -a && sudo apt install -f && sudo apt update && sudo apt upgrade"
@@ -96,3 +95,14 @@ fi
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
 eval "$(zoxide init zsh)"
 
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/wewusr/.local/bin:$PATH"
+
+# opencode
+export PATH=/home/wewusr/.opencode/bin:$PATH
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

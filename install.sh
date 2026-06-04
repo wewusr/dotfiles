@@ -45,8 +45,7 @@ sudo apt install -y \
   nmap \
   ntfs-3g \
   poppler-utils \
-  sqlite3 \
-  yazi
+  sqlite3
 
 # ─── Brave ───
 if ! command -v brave-browser &>/dev/null; then
@@ -80,7 +79,7 @@ fi
 
 # ─── Brew packages ───
 info "Installing Homebrew packages..."
-brew install zoxide dust duf tldr bat
+brew install zoxide dust duf tldr bat yazi
 
 # ─── Starship ───
 if ! command -v starship &>/dev/null; then

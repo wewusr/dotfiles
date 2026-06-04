@@ -45,7 +45,8 @@ sudo apt install -y \
   nmap \
   ntfs-3g \
   poppler-utils \
-  sqlite3
+  sqlite3 \
+  yazi
 
 # ─── Brave ───
 if ! command -v brave-browser &>/dev/null; then

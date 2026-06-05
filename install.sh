@@ -79,7 +79,7 @@ fi
 
 # ─── Brew packages ───
 info "Installing Homebrew packages..."
-brew install zoxide dust duf tldr bat
+brew install zoxide dust duf tldr bat yazi
 
 # ─── Starship ───
 if ! command -v starship &>/dev/null; then

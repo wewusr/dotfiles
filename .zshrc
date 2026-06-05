@@ -22,7 +22,7 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light MichaelAquilina/zsh-auto-notify
-zinit light MichaelAquilina/zsh-you-should-use
+# zinit light MichaelAquilina/zsh-you-should-use
 
 # 6. Completion Styles
 zstyle ':completion:*' menu no
@@ -60,7 +60,6 @@ alias cls="clear"
 alias ctree="cbonsai"
 alias df="duf --only local"
 alias du="dust"
-alias htop="btop"
 alias initconda="source /media/wewusr/Linux/downloaded/apps/conda/anaconda/anaconda3/etc/profile.d/conda.sh"
 alias ka="killall"
 alias la="eza --icons -laghH@ --time-style=long-iso"
@@ -86,6 +85,9 @@ alias gc="git commit"
 alias gps="git push origin main"
 alias gpl="git pull origin main"
 alias gimp="flatpak run org.gimp.GIMP"
+alias doom1="/var/lib/flatpak/app/io.github.fabiangreffrath.Doom/x86_64/stable/805b10cced2093a60ef8a51c2e591bc4a5c3a1f6e41b44e56afcb60fbbf5b879/export/bin/io.github.fabiangreffrath.Doom -iwad ~/.var/app/io.github.fabiangreffrath.Doom/data/crispy-doom/freedoom1.wad"
+alias doom2="/var/lib/flatpak/app/io.github.fabiangreffrath.Doom/x86_64/stable/805b10cced2093a60ef8a51c2e591bc4a5c3a1f6e41b44e56afcb60fbbf5b879/export/bin/io.github.fabiangreffrath.Doom -iwad ~/.var/app/io.github.fabiangreffrath.Doom/data/crispy-doom/freedoom2.wad"
+
 
 # 5. Integrations (Now they will find the binaries in the PATH)
 eval "$(starship init zsh)"

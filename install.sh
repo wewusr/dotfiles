@@ -22,7 +22,7 @@ info "Updating package lists..."
 sudo apt update
 
 info "Installing APT packages..."
-sudo apt install -y \
+sudo apt install \
   zsh \
   stow \
   neovim \
@@ -45,7 +45,9 @@ sudo apt install -y \
   nmap \
   ntfs-3g \
   poppler-utils \
-  sqlite3
+  sqlite3 \
+  gnome-tweaks \
+  gnome-shell-extension-manager
 
 # ─── Brave ───
 if ! command -v brave-browser &>/dev/null; then

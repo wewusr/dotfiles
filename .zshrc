@@ -48,7 +48,7 @@ lolcat <<EOF > ~/.temp
 ╚███╔███╔╝███████╗╚███╔███╔╝
  ╚══╝╚══╝ ╚══════╝ ╚══╝╚══╝
 Welcome to your terminal, $(whoami)!
-Today is $(date +"%A, %B %d, %Y")$(weather=$(curl -s "wttr.in/27.77,30.80?format=%C+%t+%w&lang=en" 2>/dev/null) && [ -n "$weather" ] && echo " | $weather")
+Today is $(date +"%A, %B %d, %Y")$(weather=$(curl -s --max-time 5 "wttr.in/27.77,30.80?format=%C,+%t,+UV+%u,+%w&lang=en" 2>/dev/null) && [ -n "$weather" ] && echo " | $weather")
 EOF
 lolcat --force ~/.temp | truesay ~/tux.png -p right
 

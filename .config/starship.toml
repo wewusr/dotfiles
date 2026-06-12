@@ -53,6 +53,7 @@ disabled = false
 
 [os.symbols]
 Linux = " "
+Zorin = " "
 
 [sudo]
 format = '[$symbol]($style)'

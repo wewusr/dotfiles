@@ -89,7 +89,7 @@ alias doom1="/var/lib/flatpak/app/io.github.fabiangreffrath.Doom/x86_64/stable/8
 alias doom2="/var/lib/flatpak/app/io.github.fabiangreffrath.Doom/x86_64/stable/805b10cced2093a60ef8a51c2e591bc4a5c3a1f6e41b44e56afcb60fbbf5b879/export/bin/io.github.fabiangreffrath.Doom -iwad ~/.var/app/io.github.fabiangreffrath.Doom/data/crispy-doom/freedoom2.wad"
 
 
-# 5. Integrations (Now they will find the binaries in the PATH)
+# 5. Integrations
 eval "$(starship init zsh)"
 if command -v atuin &> /dev/null; then
     eval "$(atuin init zsh)"
@@ -97,7 +97,8 @@ fi
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
 eval "$(zoxide init zsh)"
 
-
+# 6. Functions
+mkcd() { mkdir -p "$1" && cd "$1" }
 
 # Added by Antigravity CLI installer
 export PATH="/home/wewusr/.local/bin:$PATH"

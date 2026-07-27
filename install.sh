@@ -17,57 +17,170 @@ if [[ $EUID -eq 0 ]]; then
   exit 1
 fi
 
-# ─── APT packages ───
-info "Updating package lists..."
-sudo apt update
+# ─── Distro detection ───
+detect_distro() {
+  if [[ -f /etc/os-release ]]; then
+    . /etc/os-release
+    case "$ID" in
+      arch|endeavouros|manjaro|garuda|artix)
+        echo "arch"
+        return
+        ;;
+      ubuntu|debian|pop|linuxmint|elementary)
+        echo "debian"
+        return
+        ;;
+    esac
+  fi
+  # Fallback: check package manager
+  if command -v pacman &>/dev/null; then
+    echo "arch"
+  elif command -v apt &>/dev/null; then
+    echo "debian"
+  else
+    echo "unknown"
+  fi
+}
 
-info "Installing APT packages..."
-sudo apt install \
-  zsh \
-  stow \
-  neovim \
-  kitty \
-  btop \
-  fzf \
-  lolcat \
-  cbonsai \
-  python3 \
-  nodejs \
-  npm \
-  eza \
-  gimp \
-  7zip \
-  copyq \
-  ffmpeg \
-  fonts-noto-cjk \
-  jp \
-  luarocks \
-  nmap \
-  ntfs-3g \
-  poppler-utils \
-  sqlite3 \
-  gnome-tweaks \
-  gnome-shell-extension-manager
+DISTRO=$(detect_distro)
+info "Detected distro type: $DISTRO"
 
-# ─── Brave ───
-if ! command -v brave-browser &>/dev/null; then
-  info "Installing Brave..."
-  sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg \
-    https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-  echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" |
-    sudo tee /etc/apt/sources.list.d/brave-browser-release.list >/dev/null
+# ─── Package installation ───
+if [[ "$DISTRO" == "debian" ]]; then
+  info "Updating package lists..."
   sudo apt update
-  sudo apt install -y brave-browser
-else
-  info "Brave already installed."
-fi
 
-# ─── Ghostty ───
-if ! command -v ghostty &>/dev/null; then
-  info "Installing Ghostty..."
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
+  info "Installing APT packages..."
+  sudo apt install \
+    zsh \
+    stow \
+    neovim \
+    kitty \
+    btop \
+    fzf \
+    lolcat \
+    cbonsai \
+    python3 \
+    nodejs \
+    npm \
+    eza \
+    gimp \
+    7zip \
+    copyq \
+    ffmpeg \
+    fonts-noto-cjk \
+    jp \
+    luarocks \
+    nmap \
+    ntfs-3g \
+    poppler-utils \
+    sqlite3 \
+    gnome-tweaks \
+    gnome-shell-extension-manager
+
+  # ─── Brave (Debian) ───
+  if ! command -v brave-browser &>/dev/null; then
+    info "Installing Brave..."
+    sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg \
+      https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+    echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" |
+      sudo tee /etc/apt/sources.list.d/brave-browser-release.list >/dev/null
+    sudo apt update
+    sudo apt install -y brave-browser
+  else
+    info "Brave already installed."
+  fi
+
+  # ─── Ghostty (Debian) ───
+  if ! command -v ghostty &>/dev/null; then
+    info "Installing Ghostty..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
+  else
+    info "Ghostty already installed."
+  fi
+
+elif [[ "$DISTRO" == "arch" ]]; then
+  info "Installing packages with pacman..."
+
+  # Helper to install a list of packages if missing
+  _arch_pkgs=(
+    zsh
+    stow
+    neovim
+    kitty
+    btop
+    fzf
+    python
+    nodejs
+    npm
+    eza
+    gimp
+    p7zip
+    copyq
+    ffmpeg
+    noto-fonts-cjk
+    luarocks
+    nmap
+    ntfs-3g
+    poppler
+    sqlite
+    gnome-tweaks
+    gnome-shell-extensions
+    lolcat
+  )
+
+  for pkg in "${_arch_pkgs[@]}"; do
+    if ! pacman -Qi "$pkg" &>/dev/null; then
+      missing+=("$pkg")
+    fi
+  done
+
+  if [[ ${#missing[@]} -gt 0 ]]; then
+    sudo pacman -S --noconfirm "${missing[@]}"
+  else
+    info "All pacman packages already installed."
+  fi
+
+  # ─── cbonsai (AUR) ───
+  if ! command -v cbonsai &>/dev/null; then
+    if command -v yay &>/dev/null; then
+      info "Installing cbonsai from AUR..."
+      yay -S --noconfirm cbonsai
+    elif command -v paru &>/dev/null; then
+      info "Installing cbonsai from AUR..."
+      paru -S --noconfirm cbonsai
+    else
+      warn "yay/paru not found. Install cbonsai manually from AUR."
+    fi
+  else
+    info "cbonsai already installed."
+  fi
+
+  # ─── Brave (Arch) ───
+  if ! command -v brave-browser &>/dev/null; then
+    if command -v yay &>/dev/null; then
+      info "Installing Brave from AUR..."
+      yay -S --noconfirm brave-bin
+    elif command -v paru &>/dev/null; then
+      info "Installing Brave from AUR..."
+      paru -S --noconfirm brave-bin
+    else
+      warn "yay/paru not found. Install brave-bin manually from AUR."
+    fi
+  else
+    info "Brave already installed."
+  fi
+
+  # ─── Ghostty (Arch) ───
+  if ! command -v ghostty &>/dev/null; then
+    info "Installing Ghostty from pacman..."
+    sudo pacman -S --noconfirm ghostty
+  else
+    info "Ghostty already installed."
+  fi
+
 else
-  info "Ghostty already installed."
+  warn "Unknown distro. Skipping package manager steps."
 fi
 
 # ─── Homebrew (Linuxbrew) ───

@@ -61,6 +61,8 @@ if [[ "$DISTRO" == "debian" ]]; then
     lolcat \
     cbonsai \
     python3 \
+    python3-pip \
+    python3-venv \
     nodejs \
     npm \
     eza \
@@ -111,6 +113,8 @@ elif [[ "$DISTRO" == "arch" ]]; then
     btop
     fzf
     python
+    python-pip
+    python-virtualenv
     nodejs
     npm
     eza
@@ -236,6 +240,20 @@ if ! command -v opencode &>/dev/null; then
 else
   info "OpenCode already installed."
 fi
+
+# ─── Python tools ───
+if ! command -v pipx &>/dev/null; then
+  info "Installing pipx..."
+  python3 -m pip install --user pipx
+  python3 -m pipx ensurepath
+else
+  info "pipx already installed."
+fi
+
+info "Installing Python tools via pipx..."
+pipx install --force poetry 2>/dev/null || warn "poetry install failed"
+pipx install --force ruff 2>/dev/null || warn "ruff install failed"
+pipx install --force black 2>/dev/null || warn "black install failed"
 
 # ─── Stow dotfiles ───
 info "Stowing dotfiles..."

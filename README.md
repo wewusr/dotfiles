@@ -54,7 +54,5 @@ stow -Dv --target="$HOME" .
 ```
 
 ## Adding new configs
----
 
 Place config files in the expected paths under this repo (e.g. `~/.config/btop/btop.conf` should live at `.config/btop/btop.conf` in the repo). Running `stow` will symlink them to `$HOME`.
-=======

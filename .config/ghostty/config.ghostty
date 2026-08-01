@@ -9,7 +9,7 @@ font-style-bold-italic = auto
 font-size = 15
 
 # Window
-window-padding-x = 0
+window-padding-x = 4
 window-padding-y = 20,0
 window-decoration = false
 fullscreen = true
@@ -31,5 +31,5 @@ keybind = ctrl+alt+minus=decrease_font_size:13
 # Shell
 command = /usr/bin/zsh
 
-
+# background-opacity = 0.85
 cursor-style = block

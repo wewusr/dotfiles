@@ -54,7 +54,6 @@ lolcat --force ~/.temp | truesay ~/tux.png -p right
 
 # Aliases
 alias ana="tldr"
-alias brave="brave-browser"
 alias claer="clear"
 alias cls="clear"
 alias ctree="cbonsai"

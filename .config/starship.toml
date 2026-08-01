@@ -54,6 +54,7 @@ disabled = false
 [os.symbols]
 Linux = " "
 Zorin = " "
+EndeavourOS = " "
 
 [sudo]
 format = '[$symbol]($style)'

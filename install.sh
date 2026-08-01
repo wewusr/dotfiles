@@ -131,6 +131,23 @@ elif [[ "$DISTRO" == "arch" ]]; then
     gnome-tweaks
     gnome-shell-extensions
     lolcat
+    otf-font-awesome
+    ttf-font-awesome
+    hyprland
+    hyprpaper
+    hyprlock
+    hypridle
+    rofi
+    waybar
+    cups
+    cups-filters
+    cups-pdf
+    system-config-printer
+    hyprpolkitagent
+    xdg-desktop-portal-hyprland
+    fastfetch
+    swaync
+    libcaca
   )
 
   for pkg in "${_arch_pkgs[@]}"; do
@@ -143,6 +160,12 @@ elif [[ "$DISTRO" == "arch" ]]; then
     sudo pacman -S --noconfirm "${missing[@]}"
   else
     info "All pacman packages already installed."
+  fi
+
+  # ─── Replace mako with swaync ───
+  if pacman -Qi mako &>/dev/null; then
+    info "mako is installed; removing it and replacing with swaync..."
+    sudo pacman -Rns --noconfirm mako
   fi
 
   # ─── cbonsai (AUR) ───

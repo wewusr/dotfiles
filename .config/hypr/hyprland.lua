@@ -56,6 +56,8 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("swaync")
 	hl.exec_cmd("systemctl --user start hyprpolkitagent")
 	hl.exec_cmd("hyprpaper")
+	-- Clipboard history (cliphist + wl-clipboard)
+	hl.exec_cmd("wl-paste --watch cliphist store")
 end)
 
 -------------------------------
@@ -269,6 +271,7 @@ hl.bind(
 )
 hl.bind(mainMod .. " + F", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd("cliphist list | rofi -dmenu | cliphist decode | wl-copy"))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + S", hl.dsp.layout("togglesplit")) -- dwindle only

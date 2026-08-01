@@ -1,0 +1,16 @@
+configuration {
+  modi: "drun,run,window";
+  font: "FiraCode Nerd Font Mono 12";
+  show-icons: true;
+  icon-theme: "Tela-dark";
+  drun-display-format: "{icon} {name}";
+  display-drun: "󰀄 Apps";
+  display-run: " Run";
+  display-window: " Windows";
+  case-sensitive: false;
+  disable-history: false;
+  location: 0;
+  sidebar-mode: false;
+}
+
+@theme "/home/wewusr/.config/rofi/themes/coolors.rasi"

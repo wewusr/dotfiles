@@ -1,0 +1,196 @@
+@define-color bg       #0C1434;
+@define-color bg-dark  #0B0512;
+@define-color fg       #F0B08E;
+@define-color accent   #ED895B;
+@define-color blue     #304976;
+
+* {
+  font-family: "FiraCode Nerd Font Mono";
+  font-size: 13px;
+  font-weight: bold;
+  min-height: 0;
+  border: none;
+  border-radius: 0;
+}
+
+window#waybar {
+  background-color: alpha(@bg, 0.55);
+  border-bottom: 2px solid @blue;
+  color: @fg;
+  transition-property: background-color;
+  transition-duration: 0.2s;
+}
+
+window#waybar.empty #window {
+  background-color: transparent;
+}
+
+window#waybar.hidden {
+  opacity: 0.2;
+}
+
+tooltip {
+  background-color: @bg-dark;
+  color: @fg;
+  border: 1px solid @blue;
+  border-radius: 10px;
+  font-weight: normal;
+}
+
+tooltip label {
+  color: @fg;
+}
+
+button {
+  box-shadow: inset 0 -3px transparent;
+  border: none;
+}
+
+button:hover {
+  background: inherit;
+  text-shadow: 0 0 8px alpha(@accent, 0.6);
+}
+
+/* ---- Workspaces ---- */
+#workspaces {
+  margin: 4px 4px 4px 8px;
+  padding: 0 4px;
+  background-color: alpha(@bg-dark, 0.6);
+  border-radius: 12px;
+}
+
+#workspaces button {
+  padding: 0 8px;
+  margin: 3px 2px;
+  color: alpha(@fg, 0.5);
+  border-radius: 9px;
+}
+
+#workspaces button:hover {
+  color: @accent;
+  background-color: alpha(@blue, 0.4);
+}
+
+#workspaces button.active {
+  color: @bg-dark;
+  background-color: @fg;
+}
+
+#workspaces button.focused {
+  color: @bg-dark;
+  background-color: @fg;
+}
+
+#workspaces button.urgent {
+  color: @bg-dark;
+  background-color: @accent;
+  animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes blink {
+  50% {
+    background-color: @blue;
+  }
+}
+
+/* ---- Window title ---- */
+#window {
+  margin: 4px 8px;
+  padding: 0 12px;
+  background-color: alpha(@bg-dark, 0.6);
+  border-radius: 12px;
+  color: @fg;
+}
+
+#window.empty {
+  background-color: transparent;
+}
+
+/* ---- Modules ---- */
+.modules-right > widget > *,
+.modules-left > widget > *,
+.modules-center > widget > * {
+  margin: 4px 3px;
+  padding: 0 10px;
+  background-color: alpha(@bg-dark, 0.6);
+  border-radius: 12px;
+  border-bottom: 2px solid transparent;
+}
+
+.modules-right > widget:last-child > * {
+  margin-right: 8px;
+}
+
+.modules-right > widget:hover > *,
+.modules-left > widget:hover > * {
+  border-bottom-color: @accent;
+  color: @accent;
+}
+
+#clock {
+  color: @fg;
+}
+
+#clock:hover {
+  color: @accent;
+}
+
+#pulseaudio {
+  color: @fg;
+}
+
+#pulseaudio.muted {
+  color: @accent;
+}
+
+#battery {
+  color: @fg;
+}
+
+#battery.warning {
+  color: @accent;
+}
+
+#battery.critical {
+  color: @accent;
+  animation: blink 1s ease-in-out infinite;
+}
+
+#battery.charging {
+  color: @fg;
+}
+
+#network {
+  color: @fg;
+}
+
+#network.disconnected {
+  color: @accent;
+}
+
+#cpu,
+#memory,
+#disk,
+#temperature {
+  color: @fg;
+}
+
+#temperature.critical {
+  color: @accent;
+}
+
+#tray {
+  background-color: alpha(@bg-dark, 0.6);
+  border-radius: 12px;
+  margin: 4px 3px;
+  padding: 0 8px;
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  background-color: alpha(@accent, 0.2);
+}

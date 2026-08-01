@@ -1,0 +1,118 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 32,
+  "spacing": 4,
+  "margin-top": 0,
+  "margin-bottom": 0,
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["hyprland/window"],
+  "modules-right": [
+    "tray",
+    "cpu",
+    "memory",
+    "disk",
+    "temperature",
+    "network",
+    "pulseaudio",
+    "custom/keyboard-layout",
+    "battery",
+    "clock"
+  ],
+
+  "hyprland/workspaces": {
+    "format": "{id}",
+    "on-click": "activate",
+    "sort-by-number": true
+  },
+
+  "hyprland/window": {
+    "format": "{title}",
+    "max-length": 50
+  },
+
+  "clock": {
+    "format": "<span color='#ED895B'></span>  {:%a %d %H:%M}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "month",
+      "format": {
+        "months": "<span color='#ED895B'><b>{}</b></span>",
+        "weekdays-header": "<span color='#304976'>{}</span>",
+        "today": "<span color='#0B0512' background='#F0B08E'><b>{}</b></span>"
+      }
+    }
+  },
+
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "<span color='#ED895B'>{icon}</span> {capacity}%",
+    "format-warning": "<span color='#ED895B'>{icon}</span> {capacity}%",
+    "format-critical": "<span color='#ED895B'>{icon}</span> {capacity}%",
+    "format-charging": "<span color='#ED895B'>󰂄</span> {capacity}%",
+    "format-plugged": "<span color='#ED895B'>󱘖</span> {capacity}%",
+    "format-full": "<span color='#ED895B'>󰁹</span> {capacity}%",
+    "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "tooltip-format": "{timeTo} · {power}W · {time}"
+  },
+
+  "pulseaudio": {
+    "format": "{format_source}<span color='#ED895B'>{icon}</span>  {volume}%",
+    "format-muted": "<span color='#ED895B'>󰝟</span>  {volume}%",
+    "format-icons": {
+      "headphone": "󰋋",
+      "default": ["󰕿", "󰖀", "󰕾"]
+    },
+    "format-source": "<span color='#ED895B'>󰍬 </span>",
+    "format-source-muted": "<span color='#ED895B'>󰍭 </span>",
+    "on-click": "pavucontrol",
+    "on-scroll-up": "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+  },
+
+  "network": {
+    "format-wifi": "<span color='#ED895B'>󰤨</span> {essid}",
+    "format-ethernet": "<span color='#ED895B'>󰈁</span> {ifname}",
+    "format-linked": "{ifname} (No IP) 󰤮",
+    "format-disconnected": "<span color='#ED895B'>󰤮</span> Disconnected",
+    "tooltip-format": "{ifname} · {ipaddr} · {signalStrength}%"
+  },
+
+  "cpu": {
+    "format": "<span color='#ED895B'>󰍛</span> {usage}%",
+    "tooltip-format": "Load: {load} · {usage}%"
+  },
+
+  "memory": {
+    "format": "<span color='#ED895B'></span> {percentage}%",
+    "tooltip-format": "{used} / {total} · {percentage}%"
+  },
+
+  "disk": {
+    "format": "<span color='#ED895B'>󰋊</span> {percentage_free}%",
+    "tooltip-format": "{used} free of {total}"
+  },
+
+  "temperature": {
+    "thermal-zone": 0,
+    "hwmon-path": "/sys/class/hwmon/hwmon0/temp1_input",
+    "format": "<span color='#ED895B'>󰔏</span> {temperatureC}°C",
+    "format-critical": "<span color='#ED895B'>󰔏</span> {temperatureC}°C",
+    "critical-threshold": 80
+  },
+
+  "custom/keyboard-layout": {
+    "exec": "/home/wewusr/.config/waybar/scripts/keyboard-layout.sh",
+    "format": "<span color='#ED895B'></span> {}",
+    "on-click": "hyprctl switchxkblayout all next",
+    "tooltip": false
+  },
+
+  "tray": {
+    "icon-size": 16,
+    "spacing": 6
+  }
+}

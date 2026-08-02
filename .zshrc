@@ -22,7 +22,6 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light MichaelAquilina/zsh-auto-notify
-# zinit light MichaelAquilina/zsh-you-should-use
 
 # 6. Completion Styles
 zstyle ':completion:*' menu no
@@ -48,7 +47,7 @@ lolcat <<EOF > ~/.temp
 ╚███╔███╔╝███████╗╚███╔███╔╝
  ╚══╝╚══╝ ╚══════╝ ╚══╝╚══╝
 Welcome to your terminal, $(whoami)!
-Today is $(date +"%A, %B %d, %Y")$(weather=$(curl -s --max-time 5 "wttr.in/27.77,30.80?format=%C,+%t,+UV+%u,+%w&lang=en" 2>/dev/null) && [ -n "$weather" ] && echo " | $weather")
+Today is $(date +"%A, %B %d, %Y")
 EOF
 lolcat --force ~/.temp | truesay ~/tux.png -p right
 

@@ -37,8 +37,11 @@ local terminal = "kitty"
 local fileManager = "nautilus"
 local menu = "rofi -show clipboard"
 local browser = "brave"
-local screenshot_region = "hyprshot -m region -o ~/Pictures/Screenshots"
-local screenshot_window = "hyprshot -m window -o ~/Pictures/Screenshots"
+local screenshot_dir = "~/Pictures/Screenshots"
+local screenshot_annotate = "--filename - --output-filename " .. screenshot_dir .. "/screenshot_$(date +%Y-%m-%d_%H-%M-%S).png --fullscreen"
+local screenshot_region = "grim -g \"$(slurp)\" - | satty " .. screenshot_annotate
+local screenshot_window =
+	"grim -g \"$(hyprctl -j activewindow | jq -r '\"\\(.at[0]),\\(.at[1]) \\(.size[0])x\\(.size[1])\"')\" - | satty " .. screenshot_annotate
 
 -------------------
 ---- AUTOSTART ----

@@ -15,7 +15,7 @@
 }
 
 window {
-    width: 640px;
+    width: 800px;
     location: center;
     anchor: center;
     border-radius: 18px;
@@ -29,6 +29,7 @@ mainbox {
     background-color: transparent;
     padding: 0;
     spacing: 12px;
+    children: [ mode-switcher, inputbar, listview, message ];
 }
 
 inputbar {
@@ -116,14 +117,18 @@ mode-switcher {
 
 button {
     background-color: transparent;
-    text-color: @fg;
-    padding: 8px 12px;
-    border-radius: 10px;
+    text-color: rgba(240, 176, 142, 0.55);
+    padding: 8px 14px;
+    border-radius: 10px 10px 0 0;
+    border: 0px 0px 2px 0px;
+    border-color: transparent;
 }
 
 button selected {
-    background-color: @sel-bg;
-    text-color: @fg;
+    background-color: transparent;
+    text-color: @accent;
+    border: 0px 0px 2px 0px;
+    border-color: @accent;
 }
 
 button focused {

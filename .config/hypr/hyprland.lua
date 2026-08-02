@@ -34,8 +34,8 @@ hl.monitor({
 
 -- Set programs that you use
 local terminal = "kitty"
-local fileManager = "dolphin"
-local menu = "rofi -show run"
+local fileManager = "nautilus"
+local menu = "rofi -show drun"
 local browser = "brave"
 local screenshot_region = "hyprshot -m region -o ~/Pictures/Screenshots"
 local screenshot_window = "hyprshot -m window -o ~/Pictures/Screenshots"
@@ -58,6 +58,8 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("hyprpaper")
 	-- Clipboard history (cliphist + wl-clipboard)
 	hl.exec_cmd("wl-paste --watch cliphist store")
+	-- Open the browser on workspace 2
+	hl.dispatch(hl.dsp.exec_cmd(browser, { workspace = 2 }))
 end)
 
 -------------------------------
@@ -271,7 +273,6 @@ hl.bind(
 )
 hl.bind(mainMod .. " + F", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd("cliphist list | rofi -dmenu | cliphist decode | wl-copy"))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + S", hl.dsp.layout("togglesplit")) -- dwindle only
@@ -280,8 +281,9 @@ hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd(screenshot_region))
 hl.bind(mainMod .. " + X", hl.dsp.exec_cmd(screenshot_window))
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 
--- Cycle keyboard layout (us / ru / ar)
-hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("hyprctl switchxkblayout all next"))
+-- Cycle keyboard layout (us / ru / ar) -- locked so it works while hyprlock is up
+hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("hyprctl switchxkblayout all next"), { locked = true })
+hl.bind("SHIFT + ALT", hl.dsp.exec_cmd("hyprctl switchxkblayout all next"), { locked = true })
 
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))

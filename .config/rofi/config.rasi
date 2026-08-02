@@ -1,12 +1,16 @@
 configuration {
-  modi: "drun,run,window";
+  modes: "drun,run,clipboard:/home/wewusr/.config/rofi/scripts/clipboard.sh,window,filebrowser,emoji:/home/wewusr/.config/rofi/scripts/emoji.sh,calc";
   font: "FiraCode Nerd Font Mono 12";
   show-icons: true;
   icon-theme: "Tela-dark";
   drun-display-format: "{icon} {name}";
   display-drun: "󰀄 Apps";
   display-run: " Run";
-  display-window: " Windows";
+  display-clipboard: "󰅍 Clip";
+  display-window: " Win";
+  display-filebrowser: " Files";
+  display-emoji: "󰞅 Emoji";
+  display-calc: " Calc";
   case-sensitive: false;
   disable-history: false;
   location: 0;

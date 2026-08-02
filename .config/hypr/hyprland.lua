@@ -35,7 +35,7 @@ hl.monitor({
 -- Set programs that you use
 local terminal = "kitty"
 local fileManager = "nautilus"
-local menu = "rofi -show drun"
+local menu = "rofi -show clipboard"
 local browser = "brave"
 local screenshot_region = "hyprshot -m region -o ~/Pictures/Screenshots"
 local screenshot_window = "hyprshot -m window -o ~/Pictures/Screenshots"
@@ -271,6 +271,8 @@ hl.bind(
 	mainMod .. " + M",
 	hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'")
 )
+-- Reboot; locked so it works even while hyprlock is up
+hl.bind("CTRL + SHIFT + SUPER + R", hl.dsp.exec_cmd("systemctl reboot"), { locked = true })
 hl.bind(mainMod .. " + F", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
@@ -282,8 +284,9 @@ hl.bind(mainMod .. " + X", hl.dsp.exec_cmd(screenshot_window))
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 
 -- Cycle keyboard layout (us / ru / ar) -- locked so it works while hyprlock is up
-hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("hyprctl switchxkblayout all next"), { locked = true })
-hl.bind("SHIFT + ALT", hl.dsp.exec_cmd("hyprctl switchxkblayout all next"), { locked = true })
+local switchLayout = "~/.config/hypr/scripts/switch-layout.sh"
+hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(switchLayout), { locked = true })
+hl.bind("SHIFT + ALT", hl.dsp.exec_cmd(switchLayout), { locked = true })
 
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))

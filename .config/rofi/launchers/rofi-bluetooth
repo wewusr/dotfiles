@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Bluetooth device manager via rofi.
+set -euo pipefail
+
+case "${ROFI_RETV:-0}" in
+    0)
+        {
+            echo "Enable Bluetooth"
+            echo "Disable Bluetooth"
+            if bluetoothctl show | grep -q 'Powered: yes'; then
+                bluetoothctl devices | sed 's/^Device /Connect /'
+                bluetoothctl devices Connected | sed 's/^Device /Disconnect /'
+            fi
+        }
+        ;;
+    *)
+        case "${1:-}" in
+            "Enable Bluetooth") bluetoothctl power on ;;
+            "Disable Bluetooth") bluetoothctl power off ;;
+            Connect*) mac="$(echo "$1" | awk '{print $2}')"; bluetoothctl connect "$mac" ;;
+            Disconnect*) mac="$(echo "$1" | awk '{print $2}')"; bluetoothctl disconnect "$mac" ;;
+        esac
+        ;;
+esac

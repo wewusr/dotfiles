@@ -135,14 +135,6 @@ button:hover {
   color: @accent;
 }
 
-#pulseaudio {
-  color: @fg;
-}
-
-#pulseaudio.muted {
-  color: @accent;
-}
-
 #battery {
   color: @fg;
 }
@@ -160,23 +152,10 @@ button:hover {
   color: @fg;
 }
 
-#network {
-  color: @fg;
-}
-
-#network.disconnected {
-  color: @accent;
-}
-
 #cpu,
 #memory,
-#disk,
-#temperature {
+#disk {
   color: @fg;
-}
-
-#temperature.critical {
-  color: @accent;
 }
 
 #tray {
@@ -184,10 +163,15 @@ button:hover {
   border-radius: 12px;
   margin: 4px 3px;
   padding: 0 8px;
+  color: @accent;
+}
+
+#tray image {
+  color: @accent;
 }
 
 #tray > .passive {
-  -gtk-icon-effect: dim;
+  -gtk-icon-effect: none;
 }
 
 #tray > .needs-attention {

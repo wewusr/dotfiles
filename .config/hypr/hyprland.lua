@@ -105,8 +105,8 @@ hl.config({
 		border_size = 2,
 
 		col = {
-			active_border = { colors = { "rgba(33ccffee)", "rgba(00ff99ee)" }, angle = 45 },
-			inactive_border = "rgba(595959aa)",
+			active_border = { colors = { "rgba(ed895bee)", "rgba(f0b08eee)" }, angle = 45 },
+			inactive_border = "rgba(304976ee)",
 		},
 
 		-- Set to true to enable resizing windows by clicking and dragging on borders and gaps
@@ -282,6 +282,7 @@ hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + S", hl.dsp.layout("togglesplit")) -- dwindle only
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
+hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("swaync-client -t"))
 hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd(screenshot_region))
 hl.bind(mainMod .. " + X", hl.dsp.exec_cmd(screenshot_window))
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))

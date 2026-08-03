@@ -22,14 +22,14 @@ detect_distro() {
   if [[ -f /etc/os-release ]]; then
     . /etc/os-release
     case "$ID" in
-      arch|endeavouros|manjaro|garuda|artix)
-        echo "arch"
-        return
-        ;;
-      ubuntu|debian|pop|linuxmint|elementary)
-        echo "debian"
-        return
-        ;;
+    arch | endeavouros | manjaro | garuda | artix)
+      echo "arch"
+      return
+      ;;
+    ubuntu | debian | pop | linuxmint | elementary)
+      echo "debian"
+      return
+      ;;
     esac
   fi
   # Fallback: check package manager
@@ -148,6 +148,8 @@ elif [[ "$DISTRO" == "arch" ]]; then
     fastfetch
     swaync
     libcaca
+    cliphist
+    wl-clipboard
   )
 
   for pkg in "${_arch_pkgs[@]}"; do

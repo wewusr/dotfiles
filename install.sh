@@ -150,6 +150,7 @@ elif [[ "$DISTRO" == "arch" ]]; then
     libcaca
     cliphist
     wl-clipboard
+    fastfetch
   )
 
   for pkg in "${_arch_pkgs[@]}"; do

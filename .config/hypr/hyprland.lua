@@ -36,6 +36,7 @@ hl.monitor({
 local terminal = "kitty"
 local fileManager = "nautilus"
 local menu = "rofi -show clipboard"
+local appMenu = "rofi -show drun"
 local browser = "brave"
 local screenshot_dir = "~/Pictures/Screenshots"
 local screenshot_annotate = "--filename - --output-filename "
@@ -44,6 +45,7 @@ local screenshot_annotate = "--filename - --output-filename "
 local screenshot_region = 'grim -g "$(slurp)" - | satty ' .. screenshot_annotate
 local screenshot_window = 'grim -g "$(hyprctl -j activewindow | jq -r \'"\\(.at[0]),\\(.at[1]) \\(.size[0])x\\(.size[1])"\')" - | satty '
 	.. screenshot_annotate
+local screenshot_fullscreen = 'grim - | satty ' .. screenshot_annotate
 
 -------------------
 ---- AUTOSTART ----
@@ -288,7 +290,7 @@ hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("swaync-client -t"))
 hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd(screenshot_region))
 hl.bind(mainMod .. " + X", hl.dsp.exec_cmd(screenshot_window))
-hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
+hl.bind(mainMod .. " + ESCAPE", hl.dsp.exec_cmd("hyprlock"))
 
 -- Cycle keyboard layout (us / ru / ar) -- locked so it works while hyprlock is up
 local switchLayout = "~/.config/hypr/scripts/switch-layout.sh"
@@ -315,7 +317,7 @@ for i = 1, 10 do
 end
 
 -- Example special workspace (scratchpad)
-hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"))
+hl.bind(mainMod .. " + grave", hl.dsp.workspace.toggle_special("magic"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
 
 -- Scroll through existing workspaces with mainMod + scroll
@@ -325,6 +327,45 @@ hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 -- Move/resize windows with mainMod + LMB/RMB and dragging
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+
+-- Fullscreen / maximize
+hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen({ action = "toggle" }))
+
+-- Focus last window (flip between the last two focused)
+hl.bind(mainMod .. " + TAB", hl.dsp.focus({ last = true }))
+
+-- Move windows with mainMod + SHIFT + HJKL (vim style, mirrors focus keys)
+hl.bind(mainMod .. " + SHIFT + H", hl.dsp.window.move({ direction = "left" }))
+hl.bind(mainMod .. " + SHIFT + L", hl.dsp.window.move({ direction = "right" }))
+hl.bind(mainMod .. " + SHIFT + K", hl.dsp.window.move({ direction = "up" }))
+hl.bind(mainMod .. " + SHIFT + J", hl.dsp.window.move({ direction = "down" }))
+
+-- Resize windows with mainMod + CTRL + HJKL (hold to repeat)
+hl.bind(mainMod .. " + CTRL + H", hl.dsp.window.resize({ x = -30, y = 0 }), { repeating = true })
+hl.bind(mainMod .. " + CTRL + L", hl.dsp.window.resize({ x = 30, y = 0 }), { repeating = true })
+hl.bind(mainMod .. " + CTRL + K", hl.dsp.window.resize({ x = 0, y = -30 }), { repeating = true })
+hl.bind(mainMod .. " + CTRL + J", hl.dsp.window.resize({ x = 0, y = 30 }), { repeating = true })
+
+-- App launcher and emoji picker
+hl.bind(mainMod .. " + A", hl.dsp.exec_cmd(appMenu))
+hl.bind(mainMod .. " + PERIOD", hl.dsp.exec_cmd("rofi -show emoji"))
+
+-- Fullscreen screenshot (annotated with satty)
+hl.bind(mainMod .. " + SHIFT + Z", hl.dsp.exec_cmd(screenshot_fullscreen))
+
+-- Window groups (tabs)
+hl.bind(mainMod .. " + G", hl.dsp.group.toggle())
+hl.bind(mainMod .. " + SHIFT + G", hl.dsp.group.lock({ action = "toggle" }))
+hl.bind(mainMod .. " + CTRL + TAB", hl.dsp.group.next())
+
+-- Pin floating window so it follows across workspaces
+hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.pin({ action = "toggle" }))
+
+-- Monitor navigation and workspace moves
+hl.bind(mainMod .. " + bracketleft", hl.dsp.focus({ monitor = "-" }))
+hl.bind(mainMod .. " + bracketright", hl.dsp.focus({ monitor = "+" }))
+hl.bind(mainMod .. " + SHIFT + bracketleft", hl.dsp.workspace.move({ monitor = "-" }))
+hl.bind(mainMod .. " + SHIFT + bracketright", hl.dsp.workspace.move({ monitor = "+" }))
 
 -- Laptop multimedia keys for volume and LCD brightness
 hl.bind(

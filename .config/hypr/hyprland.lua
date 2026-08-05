@@ -38,10 +38,12 @@ local fileManager = "nautilus"
 local menu = "rofi -show clipboard"
 local browser = "brave"
 local screenshot_dir = "~/Pictures/Screenshots"
-local screenshot_annotate = "--filename - --output-filename " .. screenshot_dir .. "/screenshot_$(date +%Y-%m-%d_%H-%M-%S).png --fullscreen"
-local screenshot_region = "grim -g \"$(slurp)\" - | satty " .. screenshot_annotate
-local screenshot_window =
-	"grim -g \"$(hyprctl -j activewindow | jq -r '\"\\(.at[0]),\\(.at[1]) \\(.size[0])x\\(.size[1])\"')\" - | satty " .. screenshot_annotate
+local screenshot_annotate = "--filename - --output-filename "
+	.. screenshot_dir
+	.. "/screenshot_$(date +%Y-%m-%d_%H-%M-%S).png --fullscreen"
+local screenshot_region = 'grim -g "$(slurp)" - | satty ' .. screenshot_annotate
+local screenshot_window = 'grim -g "$(hyprctl -j activewindow | jq -r \'"\\(.at[0]),\\(.at[1]) \\(.size[0])x\\(.size[1])"\')" - | satty '
+	.. screenshot_annotate
 
 -------------------
 ---- AUTOSTART ----
@@ -276,6 +278,7 @@ hl.bind(
 )
 -- Reboot; locked so it works even while hyprlock is up
 hl.bind("CTRL + SHIFT + SUPER + R", hl.dsp.exec_cmd("systemctl reboot"), { locked = true })
+hl.bind("CTRL + SHIFT + SUPER + P", hl.dsp.exec_cmd("poweroff"), { locked = true })
 hl.bind(mainMod .. " + F", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))

@@ -331,8 +331,9 @@ hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 -- Fullscreen / maximize
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 
--- Focus last window (flip between the last two focused)
-hl.bind(mainMod .. " + TAB", hl.dsp.focus({ last = true }))
+-- Cycle between windows
+hl.bind(mainMod .. " + TAB", hl.dsp.window.cycle_next({ next = true }))
+hl.bind(mainMod .. " + SHIFT + TAB", hl.dsp.window.cycle_next({ next = false }))
 
 -- Move windows with mainMod + SHIFT + HJKL (vim style, mirrors focus keys)
 hl.bind(mainMod .. " + SHIFT + H", hl.dsp.window.move({ direction = "left" }))

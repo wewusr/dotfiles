@@ -151,6 +151,13 @@ elif [[ "$DISTRO" == "arch" ]]; then
     cliphist
     wl-clipboard
     fastfetch
+    alsa-utils
+    network-manager-applet
+    blueman
+    jq
+    grim
+    slurp
+    satty
   )
 
   for pkg in "${_arch_pkgs[@]}"; do

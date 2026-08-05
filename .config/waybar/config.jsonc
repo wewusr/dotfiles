@@ -22,7 +22,8 @@
   },
 
   "clock": {
-    "format": "<span color='#ED895B'></span>  {:%A, %B %d  %I:%M %p}",
+    "format": "<span color='#ED895B'></span>  {:%A, %B %d  %I:%M:%S %p}",
+    "interval": 1,
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
     "calendar": {
       "mode": "month",

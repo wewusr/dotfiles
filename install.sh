@@ -11,10 +11,18 @@ info() { echo -e "${GREEN}[INFO]${NC}  $1"; }
 warn() { echo -e "${YELLOW}[WARN]${NC}  $1"; }
 error() { echo -e "${RED}[ERROR]${NC} $1"; }
 
-# ─── Check for root ───
+# ─── Privilege handling ───
 if [[ $EUID -eq 0 ]]; then
-  error "Do not run this script as root. It will ask for sudo when needed."
-  exit 1
+  info "Running as root. sudo will not be used."
+  SUDO=""
+else
+  if command -v sudo &>/dev/null; then
+    SUDO="sudo"
+    info "Running as $(id -un). Will use sudo when needed."
+  else
+    error "sudo is not available and you are not root. Cannot perform privileged operations."
+    exit 1
+  fi
 fi
 
 # ─── Distro detection ───
@@ -48,47 +56,62 @@ info "Detected distro type: $DISTRO"
 # ─── Package installation ───
 if [[ "$DISTRO" == "debian" ]]; then
   info "Updating package lists..."
-  sudo apt update
+  $SUDO apt update
 
-  info "Installing APT packages..."
-  sudo apt install \
-    zsh \
-    stow \
-    neovim \
-    kitty \
-    btop \
-    fzf \
-    lolcat \
-    cbonsai \
-    python3 \
-    python3-pip \
-    python3-venv \
-    nodejs \
-    npm \
-    eza \
-    gimp \
-    7zip \
-    copyq \
-    ffmpeg \
-    fonts-noto-cjk \
-    jp \
-    luarocks \
-    nmap \
-    ntfs-3g \
-    poppler-utils \
-    sqlite3 \
-    gnome-tweaks \
+  # Helper to install a list of packages if missing
+  _apt_pkgs=(
+    zsh
+    stow
+    neovim
+    kitty
+    btop
+    fzf
+    lolcat
+    cbonsai
+    python3
+    python3-pip
+    python3-venv
+    nodejs
+    npm
+    eza
+    gimp
+    7zip
+    copyq
+    ffmpeg
+    fonts-noto-cjk
+    jp
+    luarocks
+    nmap
+    ntfs-3g
+    poppler-utils
+    sqlite3
+    gnome-tweaks
     gnome-shell-extension-manager
+  )
+
+  missing=()
+  for pkg in "${_apt_pkgs[@]}"; do
+    if ! dpkg -s "$pkg" &>/dev/null; then
+      missing+=("$pkg")
+    fi
+  done
+
+  if [[ ${#missing[@]} -gt 0 ]]; then
+    info "Installing APT packages..."
+    $SUDO apt install -y "${missing[@]}"
+  else
+    info "All APT packages already installed."
+  fi
 
   # ─── Brave (Debian) ───
   if ! command -v brave-browser &>/dev/null; then
     info "Installing Brave..."
-    sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg \
+    $SUDO curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg \
       https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
     echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" |
-      sudo tee /etc/apt/sources.list.d/brave-browser-release.list >/dev/null
-    sudo apt update
-    sudo apt install -y brave-browser
+      $SUDO tee /etc/apt/sources.list.d/brave-browser-release.list >/dev/null
+    $SUDO apt update
+    $SUDO apt install -y brave-browser
   else
     info "Brave already installed."
   fi
@@ -167,7 +190,7 @@ elif [[ "$DISTRO" == "arch" ]]; then
   done
 
   if [[ ${#missing[@]} -gt 0 ]]; then
-    sudo pacman -S --noconfirm "${missing[@]}"
+    $SUDO pacman -S --noconfirm "${missing[@]}"
   else
     info "All pacman packages already installed."
   fi
@@ -175,12 +198,14 @@ elif [[ "$DISTRO" == "arch" ]]; then
   # ─── Replace mako with swaync ───
   if pacman -Qi mako &>/dev/null; then
     info "mako is installed; removing it and replacing with swaync..."
-    sudo pacman -Rns --noconfirm mako
+    $SUDO pacman -Rns --noconfirm mako
   fi
 
   # ─── cbonsai (AUR) ───
   if ! command -v cbonsai &>/dev/null; then
-    if command -v yay &>/dev/null; then
+    if [[ $EUID -eq 0 ]]; then
+      warn "Running as root. Skipping cbonsai (AUR helpers refuse to run as root)."
+    elif command -v yay &>/dev/null; then
       info "Installing cbonsai from AUR..."
       yay -S --noconfirm cbonsai
     elif command -v paru &>/dev/null; then
@@ -195,7 +220,9 @@ elif [[ "$DISTRO" == "arch" ]]; then
 
   # ─── Brave (Arch) ───
   if ! command -v brave-browser &>/dev/null; then
-    if command -v yay &>/dev/null; then
+    if [[ $EUID -eq 0 ]]; then
+      warn "Running as root. Skipping Brave from AUR (AUR helpers refuse to run as root)."
+    elif command -v yay &>/dev/null; then
       info "Installing Brave from AUR..."
       yay -S --noconfirm brave-bin
     elif command -v paru &>/dev/null; then
@@ -211,7 +238,7 @@ elif [[ "$DISTRO" == "arch" ]]; then
   # ─── Ghostty (Arch) ───
   if ! command -v ghostty &>/dev/null; then
     info "Installing Ghostty from pacman..."
-    sudo pacman -S --noconfirm ghostty
+    $SUDO pacman -S --noconfirm ghostty
   else
     info "Ghostty already installed."
   fi
@@ -221,17 +248,34 @@ else
 fi
 
 # ─── Homebrew (Linuxbrew) ───
-if ! command -v brew &>/dev/null; then
-  info "Installing Homebrew (Linuxbrew)..."
-  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+if [[ $EUID -eq 0 ]]; then
+  warn "Homebrew refuses to run as root. Skipping Homebrew installation and packages."
 else
-  info "Homebrew already installed."
-fi
+  if ! command -v brew &>/dev/null; then
+    info "Installing Homebrew (Linuxbrew)..."
+    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  else
+    info "Homebrew already installed."
+  fi
 
-# ─── Brew packages ───
-info "Installing Homebrew packages..."
-brew install zoxide dust duf tldr bat yazi
+  # Helper to install a list of packages if missing
+  _brew_pkgs=(zoxide dust duf tldr bat yazi)
+
+  missing=()
+  for pkg in "${_brew_pkgs[@]}"; do
+    if ! brew list "$pkg" &>/dev/null; then
+      missing+=("$pkg")
+    fi
+  done
+
+  if [[ ${#missing[@]} -gt 0 ]]; then
+    info "Installing Homebrew packages..."
+    brew install "${missing[@]}"
+  else
+    info "All Homebrew packages already installed."
+  fi
+fi
 
 # ─── Starship ───
 if ! command -v starship &>/dev/null; then
@@ -261,7 +305,7 @@ fi
 # ─── truesay (npm) ───
 if ! command -v truesay &>/dev/null; then
   info "Installing truesay..."
-  sudo npm install -g truesay
+  $SUDO npm install -g truesay
 else
   info "truesay already installed."
 fi
@@ -283,10 +327,15 @@ else
   info "pipx already installed."
 fi
 
-info "Installing Python tools via pipx..."
-pipx install --force poetry 2>/dev/null || warn "poetry install failed"
-pipx install --force ruff 2>/dev/null || warn "ruff install failed"
-pipx install --force black 2>/dev/null || warn "black install failed"
+_installed_pipx=$(pipx list --short 2>/dev/null)
+for tool in poetry ruff black; do
+  if echo "$_installed_pipx" | grep -qx "$tool"; then
+    info "$tool already installed via pipx."
+  else
+    info "Installing $tool via pipx..."
+    pipx install "$tool" 2>/dev/null || warn "$tool install failed"
+  fi
+done
 
 # ─── Stow dotfiles ───
 info "Stowing dotfiles..."

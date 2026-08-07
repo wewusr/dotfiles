@@ -1,6 +1,8 @@
 hl.config({
     input = {
-        kb_layout = "us,ara",
+        kb_layout    = "us,ara",
+        repeat_rate  = 25,
+        repeat_delay = 600,
     },
 })
 

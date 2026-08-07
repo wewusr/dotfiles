@@ -1,0 +1,42 @@
+{
+    "appearance": {
+        "font": {
+            "body": {
+                "family": "Google Sans"
+            },
+            "clock": "Google Sans",
+            "headline": {
+                "family": "Google Sans"
+            },
+            "label": {
+                "family": "Google Sans"
+            },
+            "title": {
+                "family": "Google Sans"
+            },
+            "workspaces": "Google Sans"
+        },
+        "transparency": {
+            "enabled": true
+        }
+    },
+    "dashboard": {
+        "dragThreshold": 40
+    },
+    "general": {
+        "apps": {
+            "audio": [
+                "pavucontrol"
+            ],
+            "explorer": [
+                "nautilus"
+            ],
+            "terminal": [
+                "kitty"
+            ]
+        }
+    },
+    "services": {
+        "useFahrenheit": false
+    }
+}

@@ -89,6 +89,14 @@ Caelestia Shell on Hyprland (from `~/.config/hypr/hyprland/keybinds.lua` and `va
 | Mic mute | `XF86AudioMicMute` |
 | Brightness up / down | `XF86MonBrightnessUp` / `XF86MonBrightnessDown` |
 
+## Input
+
+| Action | Keys |
+|---|---|
+| Toggle keyboard layout (us/ara) | `SUPER` + `Space` — works even when locked |
+
+Defined in `~/.config/caelestia/hypr-user.lua` (`hl.bind("SUPER + Space", ...)`). Uses `{ locked = true }` so you can switch to English to type your password if the lock screen is stuck on Arabic. If you change the key, use the keysym spelling shown in `hyprctl binds -j` (e.g. `Space`, not `SPACE`).
+
 ## Customizing
 
 Overrides go in `~/.config/caelestia/hypr-vars.lua` (e.g. `kbTerminal = "SUPER + Return"`). They survive `caelestia update`. Keybind variable names are the `kb*` entries in `~/.config/hypr/variables.lua`.

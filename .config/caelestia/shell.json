@@ -106,6 +106,7 @@
     },
     "launcher": {
         "enableDangerousActions": false,
+        "showOnHover": false,
         "useFuzzy": {
             "actions": true,
             "apps": true,

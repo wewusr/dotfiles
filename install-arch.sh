@@ -62,11 +62,12 @@ _arch_pkgs=(
   python
   python-pip
   python-virtualenv
+  python-pipx
   nodejs
   npm
   eza
   gimp
-  p7zip
+  7zip
   copyq
   ffmpeg
   noto-fonts-cjk
@@ -79,7 +80,7 @@ _arch_pkgs=(
   gnome-shell-extensions
   lolcat
   otf-font-awesome
-  ttf-font-awesome
+  woff2-font-awesome
   hyprland
   hyprpaper
   hyprlock
@@ -174,6 +175,13 @@ else
   info "Brave already installed."
 fi
 
+# ─── Caelestia Shell + CLI (AUR; pulls in caelestia-cli) ───
+if ! pacman -Qi caelestia-shell &>/dev/null; then
+  _aur_install caelestia-shell
+else
+  info "caelestia-shell already installed."
+fi
+
 # ─── Ghostty ───
 if ! command -v ghostty &>/dev/null; then
   info "Installing Ghostty from pacman..."
@@ -254,27 +262,18 @@ fi
 
 # ─── Python tools ───
 if ! command -v pipx &>/dev/null; then
-  info "Installing pipx..."
-  python3 -m pip install --user pipx
-  python3 -m pipx ensurepath
+  warn "pipx not available; skipping Python tools."
 else
-  info "pipx already installed."
+  _installed_pipx=$(pipx list --short 2>/dev/null)
+  for tool in poetry ruff black; do
+    if echo "$_installed_pipx" | grep -qx "$tool"; then
+      info "$tool already installed via pipx."
+    else
+      info "Installing $tool via pipx..."
+      pipx install "$tool" 2>/dev/null || warn "$tool install failed"
+    fi
+  done
 fi
-
-_installed_pipx=$(pipx list --short 2>/dev/null)
-for tool in poetry ruff black; do
-  if echo "$_installed_pipx" | grep -qx "$tool"; then
-    info "$tool already installed via pipx."
-  else
-    info "Installing $tool via pipx..."
-    pipx install "$tool" 2>/dev/null || warn "$tool install failed"
-  fi
-done
-
-# ─── Stow dotfiles ───
-info "Stowing dotfiles..."
-cd ~/dotfiles
-stow -v --adopt --target="$HOME" .
 
 # ─── Set Zsh as default shell ───
 if [[ "$SHELL" != *"zsh"* ]]; then
@@ -285,26 +284,22 @@ else
   info "Zsh is already the default shell."
 fi
 
-# ─── Caelestia Shell (optional; slow build — run last) ───
+# ─── Apply Caelestia Shell GUI (optional; runs last) ───
 if [[ "$INSTALL_CAELESTIA" == true ]]; then
-  if ! command -v caelestia &>/dev/null && ! pacman -Qi caelestia-shell &>/dev/null; then
-    if [[ $EUID -eq 0 ]]; then
-      warn "Running as root. Skipping caelestia-shell (AUR helpers refuse to run as root)."
-    elif command -v yay &>/dev/null; then
-      info "Installing caelestia-shell from AUR..."
-      yay -S --noconfirm caelestia-shell
-    elif command -v paru &>/dev/null; then
-      info "Installing caelestia-shell from AUR..."
-      paru -S --noconfirm caelestia-shell
-    else
-      warn "yay/paru not found. Install caelestia-shell manually from AUR."
-    fi
+  if ! command -v caelestia &>/dev/null; then
+    warn "caelestia CLI not found; cannot apply the shell."
   else
-    info "caelestia-shell already installed."
+    info "Applying Caelestia Shell..."
+    caelestia install --noconfirm || warn "caelestia install failed."
   fi
 else
-  info "Skipping Caelestia Shell (pass -c or --caelestia to install it)."
+  info "Skipping Caelestia Shell setup (pass -c or --caelestia to apply it)."
 fi
+
+# ─── Stow dotfiles (last, so our configs override anything installed) ───
+info "Stowing dotfiles..."
+cd ~/dotfiles
+stow -v --adopt --target="$HOME" .
 
 echo ""
 info "Installation complete! Restart your terminal or run: source ~/.zshrc"

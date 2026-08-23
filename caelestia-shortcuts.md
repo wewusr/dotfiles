@@ -2,7 +2,7 @@
 
 Caelestia Shell on Hyprland (from `~/.config/hypr/hyprland/keybinds.lua` and `variables.lua`).
 
-> The shell itself is installed by `./install-arch.sh -c` (AUR package `caelestia-shell`); its config lives in `.config/caelestia/`.
+> The shell package (`caelestia-shell`) is installed with the other packages; `./install-arch.sh -c` additionally applies the GUI at the end (`caelestia install`). Its config lives in `.config/caelestia/`.
 
 ## Shell / system
 

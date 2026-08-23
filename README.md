@@ -44,9 +44,9 @@ Each distro has its own standalone script — pick the one matching your system.
 
 1. **Pacman packages** — git, base-devel, zsh, stow, neovim, kitty, the Hyprland stack (hyprland, hyprlock, hyprpaper, hypridle, xdg-desktop-portal-hyprland, hyprpolkitagent), Waybar, Rofi, SwayNC, printing (CUPS), Bluetooth, fonts, and more
 2. **yay bootstrap** — builds yay from the AUR when neither yay nor paru is present
-3. **AUR packages** — cbonsai, Brave (`brave-bin`)
+3. **AUR packages** — cbonsai, Brave (`brave-bin`), Caelestia Shell (`caelestia-shell`, pulls in `caelestia-cli`)
 4. **Ghostty** — from the official repos
-5. **Caelestia Shell** *(optional)* — only with `-c` / `--caelestia`; AUR-only, slow to build, always runs last
+5. **Apply Caelestia Shell** *(optional)* — only with `-c` / `--caelestia`; runs `caelestia install --noconfirm` at the very end to apply the shell's GUI setup
 
 ### `install-ubuntu.sh`
 
@@ -60,8 +60,8 @@ Each distro has its own standalone script — pick the one matching your system.
 2. **Shell tools** — Starship prompt, Atuin, Zinit plugin manager, truesay
 3. **OpenCode** — AI coding assistant
 4. **Python tools** — pipx with poetry, ruff, black
-5. **Stow** — symlinks all dotfiles into `$HOME`
-6. **Default shell** — sets Zsh as the default
+5. **Default shell** — sets Zsh as the default
+6. **Stow** — symlinks all dotfiles into `$HOME` (always last, so the repo's configs override anything installed above; on Arch this also overrides defaults written by `caelestia install`)
 
 > Both scripts are **idempotent**: they check before every step and skip anything already installed, so they're safe to re-run.
 >

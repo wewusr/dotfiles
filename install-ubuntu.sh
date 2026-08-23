@@ -55,6 +55,7 @@ _apt_pkgs=(
   python3
   python3-pip
   python3-venv
+  pipx
   nodejs
   npm
   eza
@@ -179,27 +180,18 @@ fi
 
 # ─── Python tools ───
 if ! command -v pipx &>/dev/null; then
-  info "Installing pipx..."
-  python3 -m pip install --user pipx
-  python3 -m pipx ensurepath
+  warn "pipx not available; skipping Python tools."
 else
-  info "pipx already installed."
+  _installed_pipx=$(pipx list --short 2>/dev/null)
+  for tool in poetry ruff black; do
+    if echo "$_installed_pipx" | grep -qx "$tool"; then
+      info "$tool already installed via pipx."
+    else
+      info "Installing $tool via pipx..."
+      pipx install "$tool" 2>/dev/null || warn "$tool install failed"
+    fi
+  done
 fi
-
-_installed_pipx=$(pipx list --short 2>/dev/null)
-for tool in poetry ruff black; do
-  if echo "$_installed_pipx" | grep -qx "$tool"; then
-    info "$tool already installed via pipx."
-  else
-    info "Installing $tool via pipx..."
-    pipx install "$tool" 2>/dev/null || warn "$tool install failed"
-  fi
-done
-
-# ─── Stow dotfiles ───
-info "Stowing dotfiles..."
-cd ~/dotfiles
-stow -v --adopt --target="$HOME" .
 
 # ─── Set Zsh as default shell ───
 if [[ "$SHELL" != *"zsh"* ]]; then
@@ -209,6 +201,11 @@ if [[ "$SHELL" != *"zsh"* ]]; then
 else
   info "Zsh is already the default shell."
 fi
+
+# ─── Stow dotfiles (last, so our configs override anything installed) ───
+info "Stowing dotfiles..."
+cd ~/dotfiles
+stow -v --adopt --target="$HOME" .
 
 echo ""
 info "Installation complete! Restart your terminal or run: source ~/.zshrc"

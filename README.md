@@ -46,7 +46,7 @@ Each distro has its own standalone script — pick the one matching your system.
 2. **yay bootstrap** — builds yay from the AUR when neither yay nor paru is present
 3. **AUR packages** — cbonsai, Brave (`brave-bin`), Caelestia Shell (`caelestia-shell`, pulls in `caelestia-cli`)
 4. **Ghostty** — from the official repos
-5. **Apply Caelestia Shell** *(optional)* — only with `-c` / `--caelestia`; runs `caelestia install --noconfirm` at the very end to apply the shell's GUI setup
+5. **Apply Caelestia Shell** *(optional)* — only with `-c` / `--caelestia`; removes the repo's symlinks for `starship.toml` and `btop`, then runs `caelestia install --noconfirm` so those come straight from Caelestia's out-of-the-box defaults (stow skips them afterwards). Your `caelestia/` and `hypr/` tweaks are always kept. Run without the flag to have your own dots win everywhere instead.
 
 ### `install-ubuntu.sh`
 
@@ -61,7 +61,7 @@ Each distro has its own standalone script — pick the one matching your system.
 3. **OpenCode** — AI coding assistant
 4. **Python tools** — pipx with poetry, ruff, black
 5. **Default shell** — sets Zsh as the default
-6. **Stow** — symlinks all dotfiles into `$HOME` (always last, so the repo's configs override anything installed above; on Arch this also overrides defaults written by `caelestia install`)
+6. **Stow** — symlinks all dotfiles into `$HOME` (always last, so the repo's configs override anything installed above; on Arch the Caelestia-managed paths are excluded when `-c` was passed)
 
 > Both scripts are **idempotent**: they check before every step and skip anything already installed, so they're safe to re-run.
 >

@@ -45,6 +45,12 @@ if ! command -v pacman &>/dev/null; then
   exit 1
 fi
 
+# Configs handed over to Caelestia's out-of-the-box defaults when -c/--caelestia
+# is used: they are unstowed and excluded from stowing so Caelestia owns them.
+# Everything else (incl. our own caelestia/ and hypr/ tweaks) is always stowed.
+CAELESTIA_OOTB=(starship.toml btop)
+_stow_ignore="^($(IFS='|'; echo "${CAELESTIA_OOTB[*]//./\\.}"))$"
+
 # ─── Sync package databases ───
 info "Syncing package databases..."
 $SUDO pacman -Sy --noconfirm
@@ -288,18 +294,32 @@ fi
 if [[ "$INSTALL_CAELESTIA" == true ]]; then
   if ! command -v caelestia &>/dev/null; then
     warn "caelestia CLI not found; cannot apply the shell."
+    _stow_ignore=""
   else
+    # Hand the Caelestia-managed configs over to its defaults: drop our
+    # symlinks first so `caelestia install` writes real files (and cannot
+    # write through a link into this repo), and exclude them from stowing.
+    for name in "${CAELESTIA_OOTB[@]}"; do
+      if [[ -L "$HOME/.config/$name" ]]; then
+        info "Removing symlink ~/.config/$name (letting Caelestia own it)..."
+        rm "$HOME/.config/$name"
+      fi
+    done
     info "Applying Caelestia Shell..."
     caelestia install --noconfirm || warn "caelestia install failed."
   fi
 else
+  _stow_ignore=""
   info "Skipping Caelestia Shell setup (pass -c or --caelestia to apply it)."
 fi
 
 # ─── Stow dotfiles (last, so our configs override anything installed) ───
 info "Stowing dotfiles..."
 cd ~/dotfiles
-stow -v --adopt --target="$HOME" .
+stow -v --adopt --target="$HOME" ${_stow_ignore:+--ignore="$_stow_ignore"} .
+
+echo ""
+info "Installation complete! Restart your terminal or run: source ~/.zshrc"
 
 echo ""
 info "Installation complete! Restart your terminal or run: source ~/.zshrc"

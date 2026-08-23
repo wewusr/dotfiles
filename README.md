@@ -1,46 +1,71 @@
 # Dotfiles
 
-Personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/).
+Personal dotfiles for an **Arch-based Hyprland** desktop (with a lighter **Ubuntu/Debian** fallback), managed with [GNU Stow](https://www.gnu.org/software/stow/) as a single top-level stow package — every path in this repo maps 1:1 to `$HOME`.
 
 ## What's included
 
 | Tool | Config | Purpose |
 |------|--------|---------|
 | zsh | `.zshrc` | Shell with Zinit plugins, Starship prompt, Atuin history, zoxide navigation |
-| Neovim | `.config/nvim` | Editor configuration |
-| Starship | `.config/starship.toml` | Shell prompt theme |
+| Neovim | `.config/nvim` | LazyVim-based editor configuration |
 | Kitty | `.config/kitty` | Terminal emulator |
 | Ghostty | `.config/ghostty` | Terminal emulator |
 | Atuin | `.config/atuin` | Shell history sync and search |
+| Starship | `.config/starship.toml` | Shell prompt theme |
 | btop | `.config/btop` | System monitor |
 | bat | `.config/bat` | File previewer theme |
 | OpenCode | `.config/opencode` | AI coding assistant config |
+| Hyprland | `.config/hypr` | Window manager stack: hyprland (Lua-driven config), hyprlock, hyprpaper, hypridle |
+| Caelestia | `.config/caelestia` | Quickshell desktop shell config (shell.json, CLI theming, Hyprland overrides) — see [caelestia-shortcuts.md](caelestia-shortcuts.md) |
+| Waybar | `.config/waybar` | Status bar for the non-Caelestia setup |
+| SwayNC | `.config/swaync` | Notification daemon |
+| Rofi | `.config/rofi` | Launchers (power menu, wifi, emoji, clipboard, screenshots, …) and themes |
+| Fonts | `.fonts` | FiraCode Nerd Font + Arabic calligraphy fonts |
+| Icons | `.local/share/icons` | Tela icon themes |
 
 ## Installation
 
 ```bash
 git clone --depth=1 https://github.com/wewusr/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-chmod +x install.sh
-./install.sh
+
+# Arch-based (Arch, EndeavourOS, Manjaro, Garuda, Artix)
+chmod +x install-arch.sh
+./install-arch.sh            # add -c / --caelestia to also install Caelestia Shell (slow build)
+
+# Ubuntu/Debian-based (Ubuntu, Debian, Pop!_OS, Linux Mint, elementary)
+chmod +x install-ubuntu.sh
+./install-ubuntu.sh
 ```
 
-The script will:
+Each distro has its own standalone script — pick the one matching your system.
 
-1. **System packages** — Installs packages via APT (Debian) or pacman (Arch) including zsh, stow, neovim, kitty, btop, fzf, Python 3, Node.js, and more
-2. **Python setup** — Installs pip, venv, pipx, and Python tools (poetry, ruff, black)
-3. **Homebrew** — Installs Linuxbrew and packages (zoxide, dust, duf, tldr, bat, yazi)
-4. **Shell tools** — Starship prompt, Atuin, Zinit plugin manager, truesay
-5. **OpenCode** — AI coding assistant
-6. **Stow** — Symlinks all dotfiles to `$HOME`
-7. **Default shell** — Sets Zsh as the default shell
+### `install-arch.sh`
 
-> Do **not** run the script as root. It will prompt for `sudo` when needed.
+1. **Pacman packages** — git, base-devel, zsh, stow, neovim, kitty, the Hyprland stack (hyprland, hyprlock, hyprpaper, hypridle, xdg-desktop-portal-hyprland, hyprpolkitagent), Waybar, Rofi, SwayNC, printing (CUPS), Bluetooth, fonts, and more
+2. **yay bootstrap** — builds yay from the AUR when neither yay nor paru is present
+3. **AUR packages** — cbonsai, Brave (`brave-bin`)
+4. **Ghostty** — from the official repos
+5. **Caelestia Shell** *(optional)* — only with `-c` / `--caelestia`; AUR-only, slow to build, always runs last
 
-## Supported distros
+### `install-ubuntu.sh`
 
-- **Debian-based**: Ubuntu, Debian, Pop!_OS, Linux Mint, elementary
-- **Arch-based**: Arch, EndeavourOS, Manjaro, Garuda, Artix
+1. **APT packages** — same core tools (zsh, stow, neovim, kitty, btop, fzf, Python 3, Node.js, …)
+2. **Brave** — via the official Brave apt repository
+3. **Ghostty** — via the [ghostty-ubuntu](https://github.com/mkasberg/ghostty-ubuntu) community build
+
+### Common to both scripts
+
+1. **Homebrew** — Linuxbrew plus zoxide, dust, duf, tldr, bat, yazi
+2. **Shell tools** — Starship prompt, Atuin, Zinit plugin manager, truesay
+3. **OpenCode** — AI coding assistant
+4. **Python tools** — pipx with poetry, ruff, black
+5. **Stow** — symlinks all dotfiles into `$HOME`
+6. **Default shell** — sets Zsh as the default
+
+> Both scripts are **idempotent**: they check before every step and skip anything already installed, so they're safe to re-run.
+>
+> Do **not** run the scripts as root. They will prompt for `sudo` when needed. (AUR/Homebrew steps refuse root and are skipped.)
 
 ## Manual stow usage
 

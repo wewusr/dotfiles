@@ -85,7 +85,7 @@ alias gpl="git pull origin main"
 alias gimp="flatpak run org.gimp.GIMP"
 alias doom1="/var/lib/flatpak/app/io.github.fabiangreffrath.Doom/x86_64/stable/805b10cced2093a60ef8a51c2e591bc4a5c3a1f6e41b44e56afcb60fbbf5b879/export/bin/io.github.fabiangreffrath.Doom -iwad ~/.var/app/io.github.fabiangreffrath.Doom/data/crispy-doom/freedoom1.wad"
 alias doom2="/var/lib/flatpak/app/io.github.fabiangreffrath.Doom/x86_64/stable/805b10cced2093a60ef8a51c2e591bc4a5c3a1f6e41b44e56afcb60fbbf5b879/export/bin/io.github.fabiangreffrath.Doom -iwad ~/.var/app/io.github.fabiangreffrath.Doom/data/crispy-doom/freedoom2.wad"
-
+alias oc="opencode"
 
 # 5. Integrations
 eval "$(starship init zsh)"

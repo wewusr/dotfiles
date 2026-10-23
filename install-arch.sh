@@ -49,7 +49,10 @@ fi
 # is used: they are unstowed and excluded from stowing so Caelestia owns them.
 # Everything else (incl. our own caelestia/ and hypr/ tweaks) is always stowed.
 CAELESTIA_OOTB=(starship.toml btop)
-_stow_ignore="^($(IFS='|'; echo "${CAELESTIA_OOTB[*]//./\\.}"))$"
+_stow_ignore="^($(
+  IFS='|'
+  echo "${CAELESTIA_OOTB[*]//./\\.}"
+))$"
 
 # ─── Sync package databases ───
 info "Syncing package databases..."
@@ -82,8 +85,6 @@ _arch_pkgs=(
   ntfs-3g
   poppler
   sqlite
-  gnome-tweaks
-  gnome-shell-extensions
   lolcat
   otf-font-awesome
   woff2-font-awesome

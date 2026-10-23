@@ -9,4 +9,6 @@ return {
 	kbCloseWindow = "SUPER + C",
 	kbWindowFullscreen = "SUPER + Q",
 	kbEditor = "SUPER + E",
+	cursorTheme = "breeze_cursors",
+	cursorSize = 24,
 }

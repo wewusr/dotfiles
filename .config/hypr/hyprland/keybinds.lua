@@ -159,6 +159,7 @@ create_bind(vars.kbAudioSettings, hl.dsp.exec_cmd(vars.audioSettings))
 create_bind(vars.kbScreenshot, hl.dsp.exec_cmd("caelestia screenshot"), locked)
 create_bind(vars.kbScreenshotFreeze, hl.dsp.global("caelestia:screenshotFreeze"))
 create_bind(vars.kbScreenshotRegion, hl.dsp.global("caelestia:screenshot"))
+create_bind("SUPER + SHIFT + S", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.local/bin/screenshot-gnome-style.sh"))
 create_bind(vars.kbRecord, hl.dsp.exec_cmd("caelestia record"))
 create_bind(vars.kbRecordSound, hl.dsp.exec_cmd("caelestia record -s"))
 create_bind(vars.kbRecordRegion, hl.dsp.exec_cmd("caelestia record -r"))
@@ -200,11 +201,6 @@ create_bind(vars.kbSleep, hl.dsp.exec_cmd(vars.sleepGestureCmd), locked)
 create_bind(vars.kbClipboard, hl.dsp.exec_cmd("pkill fuzzel || caelestia clipboard"))
 create_bind(vars.kbClipboardDel, hl.dsp.exec_cmd("pkill fuzzel || caelestia clipboard -d"))
 create_bind(vars.kbEmoji, hl.dsp.exec_cmd("pkill fuzzel || caelestia emoji -p"))
-create_bind(
-    vars.kbClipboardPasteLatest,
-    hl.dsp.exec_cmd('sleep 0.5s && ydotool type -d 1 "$(cliphist list | head -1 | cliphist decode)"'),
-    locked
-)
 
 -- Testing
 create_bind(

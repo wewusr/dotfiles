@@ -318,9 +318,7 @@ fi
 info "Stowing dotfiles..."
 cd ~/dotfiles
 stow -v --adopt --target="$HOME" ${_stow_ignore:+--ignore="$_stow_ignore"} .
-
-echo ""
-info "Installation complete! Restart your terminal or run: source ~/.zshrc"
+bat cache --build
 
 echo ""
 info "Installation complete! Restart your terminal or run: source ~/.zshrc"

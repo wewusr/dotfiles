@@ -33,7 +33,7 @@
             "background": true,
             "showDate": true
         },
-        "persistent": true,
+        "persistent": false,
         "popouts": {
             "activeWindow": true
         },
@@ -105,7 +105,7 @@
         }
     },
     "launcher": {
-        "enableDangerousActions": false,
+        "enableDangerousActions": true,
         "showOnHover": false,
         "useFuzzy": {
             "actions": true,
@@ -120,5 +120,10 @@
     },
     "sidebar": {
         "enabled": true
+    },
+    "utilities": {
+        "toasts": {
+            "nowPlaying": true
+        }
     }
 }

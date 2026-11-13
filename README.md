@@ -20,6 +20,13 @@ Personal dotfiles for an **Arch-based Hyprland** desktop (with a lighter **Ubunt
 | Waybar | `.config/waybar` | Status bar for the non-Caelestia setup |
 | SwayNC | `.config/swaync` | Notification daemon |
 | Rofi | `.config/rofi` | Launchers (power menu, wifi, emoji, clipboard, screenshots, …) and themes |
+| fish | `.config/fish` | Interactive shell configuration |
+| foot | `.config/foot` | Terminal emulator |
+| fastfetch | `.config/fastfetch` | System information dashboard |
+| micro | `.config/micro` | Terminal-based text editor |
+| uwsm | `.config/uwsm` | Wayland session management |
+| GTK | `.config/gtk-3.0`, `.config/gtk-4.0`, `.gtkrc`, `.gtkrc-2.0` | GTK theming |
+| VSCodium | `.config/VSCodium` | Editor settings (User directory synced; cache excluded) |
 | Fonts | `.fonts` | FiraCode Nerd Font + Arabic calligraphy fonts |
 | Icons | `.local/share/icons` | Tela icon themes |
 

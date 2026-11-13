@@ -5,6 +5,7 @@ return {
         config = function(_, opts)
             require("luasnip").setup(opts)
             require("luasnip.loaders.from_vscode").lazy_load()
+            require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/lua/snippets" })
         end,
     },
 }
